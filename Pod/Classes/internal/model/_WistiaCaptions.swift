@@ -1,6 +1,6 @@
 //
 //  _WistiaCaptions.swift
-//  WistiaKit internal
+//  WistiaKit open
 //
 //  Created by Daniel Spinosa on 6/23/16.
 //  Copyright © 2016 Wistia, Inc. All rights reserved.
@@ -16,7 +16,7 @@ import Foundation
  and the actual text to be displayed.
 
  */
-internal struct WistiaCaptions {
+public struct WistiaCaptions {
 
     /// A unique identifier for this captions object.
     let captionsID:Int
@@ -87,7 +87,7 @@ extension WistiaCaptions: WistiaJSONParsable {
  specifies the time to begin and end showing it.
  
  */
-internal struct WistiaCaptionSegment {
+public struct WistiaCaptionSegment {
     /// Time in video to begin displaying this segment
     let startTime:Float
 
@@ -98,7 +98,7 @@ internal struct WistiaCaptionSegment {
     let text:[String]
 }
 
-internal extension WistiaCaptionSegment {
+public extension WistiaCaptionSegment {
 
     /// Initialize a WistiaCaptionSegment from the provided JSON hash.
     ///

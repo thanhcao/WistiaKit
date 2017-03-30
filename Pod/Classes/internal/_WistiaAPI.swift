@@ -1,6 +1,6 @@
 //
 //  _WistiaAPI.swift
-//  WistiaKit internal
+//  WistiaKit public
 //
 //  Created by Daniel Spinosa on 5/4/16.
 //  Copyright © 2016 Wistia, Inc. All rights reserved.
@@ -9,9 +9,9 @@
 import Foundation
 import Alamofire
 
-internal extension WistiaAPI {
+public extension WistiaAPI {
 
-    internal static func captions(for hash:String, completionHandler: @escaping (_ captions: [WistiaCaptions], _ error: WistiaAPIError?)->() ) {
+    open static func captions(for hash:String, completionHandler: @escaping (_ captions: [WistiaCaptions], _ error: WistiaAPIError?)->() ) {
         Alamofire.request("https://fast.wistia.com/embed/captions/\(hash).json", method: .get)
             .responseJSON { response in
 
@@ -39,7 +39,7 @@ internal extension WistiaAPI {
     }
 
     /// Domain Restrictions enforces HTTP Referer on this route
-    internal static func mediaInfo(for hash:String, referer:String? = nil, completionHandler: @escaping (_ media: WistiaMedia?, _ error: WistiaAPIError?)->() ) {
+    open static func mediaInfo(for hash:String, referer:String? = nil, completionHandler: @escaping (_ media: WistiaMedia?, _ error: WistiaAPIError?)->() ) {
         var headers = [String: String]()
         if let ref = referer {
             headers["Referer"] = ref
@@ -70,7 +70,7 @@ internal extension WistiaAPI {
         }
     }
 
-    internal static func addSorting(_ sorting: (by: SortBy, direction: SortDirection)?, to params: [String: Any]) -> [String: Any] {
+    open static func addSorting(_ sorting: (by: SortBy, direction: SortDirection)?, to params: [String: Any]) -> [String: Any] {
         var p = params
         if let sortBy = sorting?.by, let sortDirection = sorting?.direction {
             p["sort_by"] = sortBy.rawValue
@@ -83,9 +83,9 @@ internal extension WistiaAPI {
 
 //MARK: - Errors
 
-internal extension WistiaAPIError {
+public extension WistiaAPIError {
 
-    internal static func error(for response: DataResponse<Any>) -> WistiaAPIError {
+    open static func error(for response: DataResponse<Any>) -> WistiaAPIError {
         switch(response.result) {
 
         case.success(let value):
