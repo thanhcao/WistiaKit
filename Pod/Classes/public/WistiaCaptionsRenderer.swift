@@ -46,6 +46,8 @@ open class WistiaCaptionsRenderer {
 
      - Note: Upon setting delegate, you will immediately receive a callback with current languages available.
      */
+    public init() {}
+    
     open weak var delegate:WistiaCaptionsRendererDelegate? {
         didSet {
             if let d = delegate {
