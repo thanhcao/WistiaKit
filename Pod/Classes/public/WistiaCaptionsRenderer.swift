@@ -46,7 +46,7 @@ open class WistiaCaptionsRenderer {
 
      - Note: Upon setting delegate, you will immediately receive a callback with current languages available.
      */
-    public weak var delegate:WistiaCaptionsRendererDelegate? {
+    open weak var delegate:WistiaCaptionsRendererDelegate? {
         didSet {
             if let d = delegate {
                 d.captionsRenderer(self, didUpdateCaptionsLanguagesAvailable: captionsLanguagesAvailable)
@@ -63,7 +63,7 @@ open class WistiaCaptionsRenderer {
      to the video view, it is centered within the video view, and it is allowed to grow (ie. intrinsically sized)
      in width and height.
     */
-    public var captionsView: UILabel? {
+    open var captionsView: UILabel? {
         didSet {
             if let v = captionsView {
                 v.numberOfLines = 0
@@ -73,7 +73,7 @@ open class WistiaCaptionsRenderer {
     }
 
     /// Should captions be displayed
-    public var enabled: Bool = false {
+    open var enabled: Bool = false {
         didSet {
             if !enabled {
                 removeDisplayedSegment()
@@ -85,7 +85,7 @@ open class WistiaCaptionsRenderer {
      Which captions should be displayed (when enabled)?  See `captionsLanguagesAvailable`
      for enumeration of caption languages available for the current media.
      */
-    public var captionsLanguageCode = "eng" {
+    open var captionsLanguageCode = "eng" {
         didSet(oldCode) {
             if captionsLanguageCode != oldCode {
                 removeDisplayedSegment()
@@ -100,16 +100,15 @@ open class WistiaCaptionsRenderer {
      
      - Note: Captions are retrieved asynchronously, so this value may update any time after media changes.
      */
-    public var captionsLanguagesAvailable: [String] = [String]() {
+    open var captionsLanguagesAvailable: [String] = [String]() {
         didSet {
             delegate?.captionsRenderer(self, didUpdateCaptionsLanguagesAvailable: captionsLanguagesAvailable)
         }
     }
 
-    //MARK: - Internal
 
     /// - Warning: We assume `WistiaCaptionSegment`s are properly ordered.  Should be guaranteed by ModelBuilder.
-    public var media: WistiaMedia? = nil {
+    open var media: WistiaMedia? = nil {
         didSet(lastMedia) {
             if let m = media, m != lastMedia {
                 removeDisplayedSegment()
@@ -118,10 +117,10 @@ open class WistiaCaptionsRenderer {
         }
     }
 
-    public var currentlySelectedCaptions: WistiaCaptions?
-    public var currentCaptionSegment: WistiaCaptionSegment?
+    open var currentlySelectedCaptions: WistiaCaptions?
+    open var currentCaptionSegment: WistiaCaptionSegment?
 
-    public func prepareCaptions() {
+    open func prepareCaptions() {
         if let _ = media?.embedOptions?.captionsAvailable {
             WistiaAPI.captions(for: media!.hashedID, completionHandler: { captions, error in
                 self.media?.add(captions: captions)
@@ -134,7 +133,7 @@ open class WistiaCaptionsRenderer {
         }
     }
 
-    public func onPlayerTimeUpdate(_ time:CMTime) {
+    open func onPlayerTimeUpdate(_ time:CMTime) {
         guard enabled && captionsView != nil else { return }
         guard let caps = currentlySelectedCaptions else { return }
 
@@ -149,13 +148,13 @@ open class WistiaCaptionsRenderer {
 
     //MARK: - Display
 
-    public func removeDisplayedSegment() {
+    open func removeDisplayedSegment() {
         currentCaptionSegment = nil
         captionsView?.isHidden = true
         //no need to set text to nil
     }
 
-    public func displaySegmentOf(_ captions: WistiaCaptions, forTime time:CMTime) {
+    open func displaySegmentOf(_ captions: WistiaCaptions, forTime time:CMTime) {
         //Since the user may seek around the video, the current implemention is not optimized
         let t = Float(time.seconds)
 
@@ -182,7 +181,7 @@ open class WistiaCaptionsRenderer {
 
     //MARK: - Helpers
 
-    public func chooseCurrentCaptions() {
+    open func chooseCurrentCaptions() {
         let captionsMatchingCode = media?.captions?.filter({ (cap) -> Bool in
             cap.languageCode == captionsLanguageCode
         })
