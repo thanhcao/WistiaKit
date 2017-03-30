@@ -100,7 +100,7 @@ public class WistiaCaptionsRenderer {
      
      - Note: Captions are retrieved asynchronously, so this value may update any time after media changes.
      */
-    internal(set) public var captionsLanguagesAvailable: [String] = [String]() {
+    public var captionsLanguagesAvailable: [String] = [String]() {
         didSet {
             delegate?.captionsRenderer(self, didUpdateCaptionsLanguagesAvailable: captionsLanguagesAvailable)
         }
@@ -109,7 +109,7 @@ public class WistiaCaptionsRenderer {
     //MARK: - Internal
 
     /// - Warning: We assume `WistiaCaptionSegment`s are properly ordered.  Should be guaranteed by ModelBuilder.
-    internal var media: WistiaMedia? = nil {
+    public var media: WistiaMedia? = nil {
         didSet(lastMedia) {
             if let m = media, m != lastMedia {
                 removeDisplayedSegment()
@@ -118,10 +118,10 @@ public class WistiaCaptionsRenderer {
         }
     }
 
-    fileprivate var currentlySelectedCaptions: WistiaCaptions?
-    fileprivate var currentCaptionSegment: WistiaCaptionSegment?
+    public var currentlySelectedCaptions: WistiaCaptions?
+    public var currentCaptionSegment: WistiaCaptionSegment?
 
-    fileprivate func prepareCaptions() {
+    public func prepareCaptions() {
         if let _ = media?.embedOptions?.captionsAvailable {
             WistiaAPI.captions(for: media!.hashedID, completionHandler: { captions, error in
                 self.media?.add(captions: captions)
@@ -134,7 +134,7 @@ public class WistiaCaptionsRenderer {
         }
     }
 
-    internal func onPlayerTimeUpdate(_ time:CMTime) {
+    public func onPlayerTimeUpdate(_ time:CMTime) {
         guard enabled && captionsView != nil else { return }
         guard let caps = currentlySelectedCaptions else { return }
 
@@ -149,13 +149,13 @@ public class WistiaCaptionsRenderer {
 
     //MARK: - Display
 
-    fileprivate func removeDisplayedSegment() {
+    public func removeDisplayedSegment() {
         currentCaptionSegment = nil
         captionsView?.isHidden = true
         //no need to set text to nil
     }
 
-    fileprivate func displaySegmentOf(_ captions: WistiaCaptions, forTime time:CMTime) {
+    public func displaySegmentOf(_ captions: WistiaCaptions, forTime time:CMTime) {
         //Since the user may seek around the video, the current implemention is not optimized
         let t = Float(time.seconds)
 
@@ -182,7 +182,7 @@ public class WistiaCaptionsRenderer {
 
     //MARK: - Helpers
 
-    fileprivate func chooseCurrentCaptions() {
+    public func chooseCurrentCaptions() {
         let captionsMatchingCode = media?.captions?.filter({ (cap) -> Bool in
             cap.languageCode == captionsLanguageCode
         })

@@ -17,7 +17,7 @@ import Foundation
 
  See [Wistia Data API: Media](http://wistia.com/doc/data-api#medias_response)
  */
-public struct WistiaMedia {
+open struct WistiaMedia {
 
     /// The display name of the media.
     public var name: String?
@@ -208,7 +208,7 @@ extension WistiaMedia: Equatable { }
     names are the same, descriptions are the same, and their embedOptions are equal.
  
  */
-public func ==(lhs: WistiaMedia, rhs: WistiaMedia) -> Bool {
+open func ==(lhs: WistiaMedia, rhs: WistiaMedia) -> Bool {
 
     return lhs.hashedID == rhs.hashedID &&
         lhs.status == rhs.status &&
