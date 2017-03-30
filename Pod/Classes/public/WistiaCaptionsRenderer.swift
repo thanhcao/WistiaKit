@@ -37,7 +37,7 @@ public protocol WistiaCaptionsRendererDelegate : class {
  
  - Note: If you are using `WistiaPlayerViewController`, captions handling is built in.  Get lost!  ;-]
  */
-public class WistiaCaptionsRenderer {
+open class WistiaCaptionsRenderer {
 
     /**
      The object that acts as the delegate of the `WistiaCaptionsRenderer`.  It must adopt the `WistiaCaptionsRendererDelegate` protocol.
